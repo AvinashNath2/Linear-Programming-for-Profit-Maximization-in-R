@@ -1,0 +1,124 @@
+---
+title: "Linear Programming Problem"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+## Introduction
+
+Linear programming is a simple technique where we depict complex relationships through linear functions and then find the optimum points. The important word in previous sentence is depict. The real relationships might be much more complex - but we can simplify them to linear relationships.
+
+The word linear means the relationship which canbe represented by a straight line .i.e the relation is of theformax +by=c. In other words it is used to describe therelationship between two or more variables which areproportional to each other The word "programming" is concerned with theoptimal allocation of limited 
+
+**Definition**
+The word linear means the relationship which canbe represented by a straight line .i.e the relation is of theformax +by=c. In other words it is used to describe therelationship between two or more variables which areproportional to each other The word "programming" is concerned with theoptimal allocation of limited resources.
+
+Terminologies used in Linear Programming
+
+ + **Decision Variables**: The decision variables are the variables which will decide my output. They represent my ultimate solution. To solve any problem, we first need to identify the decision variables. 
+
+ + **Objective Function**: It is defined as the objective of making decisions. In the above example, the company wishes to increase the total profit represented by Z. So, profit is my objective function.
+
+ + **Constraints**: The constraints are the restrictions or limitations on the decision variables. They usually limit the value of the decision variables. In the above example, the limit on the availability of resources Milk and Choco are my constraints.
+ 
+ + **Non-negativity restriction**: For all linear programs, the decision variables should always take non-negative values. Which means the values for decision variables should be greater than or equal to 0.
+
+**Requirements for L.P**  
+
++ There must be well defined objective function.
++ There must be a constraint on the amoun.
++ There must be alternative course of action.
++ The decision variables should be interrelated and non negative.
++ The resource must be limited in supply.
+
+**Assumptions**
+Proportionality  Additivity  Continuity  Certainity  Finite  Choices.
+
+**Advantage of L.P.**
+
+1.  It helps in attaining optimum use of productive factors.  
+2.  It improves the quality of the decisions.  
+3.  It provides better tools for meeting the changing conditions.  
+4.  It highlights the bottleneck in the production proces.  
+
+**Limitation of L.P.**
+
+1.  For large problems the computational difficulties are enormous.
+2.  It may yield fractional value answers to decision variables.
+3.  It is applicable to only static situation.
+4.  LP deals with the problems with single objective.
+
+**Application of L.P**  
+
++  Industrial Application
++  Product Mix Problem
++  Blending Problems
++  Production Scheduling Problem
++  Assembly Line Balancing
++  Make-Or-Buy Problems
++  Management Applications
++  Media Selection Problems
++  Portfolio Selection Problems
++  Profit Planning Problems
++  Transportation Problems
++  Miscellaneous Applications
++  Diet Problems
++  Agriculture Problems
++  Flight Scheduling Problems
++  Facilities Location Problems
+
+## Problem Statement
+
+**Problem:** A car company produces 2 models, model A and model B. Long-term projections indicate an expected demand of at least 100 model A cars and 80 model B cars each day. Because of limitations on production capacity, no more than 200 model A cars and 170 model B cars can be made daily. To satisfy a shipping contract, a total of at least 200 cars much be shipped each day. If each model A car sold results in a $2000 loss, but each model B car produces a $5000 profit, how many of each type should be made daily to maximize net profits:
+
+The question asks for the optimal number of each car type should be made for maximize profit, so my variables will stand for that:
+
+Let,  
+  
+```
+x = A Car Model  
+y = B Car Model  
+```
+  
+**Equations to solve this problem,**  
+```
+-2000 x + 5000 y  = Z #For Profit
+  
+x >= 100  
+y >= 80
+x <= 200
+y <= 170
+x + y >= 200 
+```
+  
+#### Objective Function 
+  
+```{r}
+obj.fun <- c(-2000,5000)
+```
+  
+#### Constraint Of equations
+
+```{r}
+# Loading Packages
+library(lpSolve)
+# Matrix of 2*5 to make the equations 
+constr <- matrix(c(1,0,0,1,1,0,0,1,1,1), ncol = 2,byrow = TRUE)
+# Direction of each euation 
+constr.dir <- c(">=",">=","<=","<=",">=")
+# Right-Hand--Side of the equation 
+rhs <- c(100,80,200,170,200)
+```
+#### Maximising problem
+```{r}
+# Combining all the constraint of the equation forSolution
+prod.sol <- lp("max",obj.fun,constr,constr.dir,rhs,compute.sens = TRUE)
+prod.sol$solution
+```
+```
+x = 100 (A Car Model)  
+y = 170 (B Car Model)  
+It is the optimal solution for this problem.
+```
